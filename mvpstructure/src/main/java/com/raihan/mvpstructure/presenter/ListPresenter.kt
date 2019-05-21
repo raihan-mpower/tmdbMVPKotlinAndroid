@@ -2,14 +2,16 @@ package com.raihan.mvpstructure.presenter
 
 import com.raihan.mvpstructure.contract.ListContract
 
-class ListPresenter:ListContract.Presenter,ListContract.Interactor.OnFinishedListener{
+open class ListPresenter:ListContract.Presenter,ListContract.Interactor.OnFinishedListener{
+
 
     lateinit var interactor:ListContract.Interactor
 
     lateinit var view:ListContract.View
 
-    constructor(interactor: ListContract.Interactor){
+    constructor(interactor: ListContract.Interactor,view: ListContract.View){
         this.interactor = interactor;
+        this.view = view;
     }
 
     override fun attachView(view: ListContract.View) {
@@ -22,6 +24,9 @@ class ListPresenter:ListContract.Presenter,ListContract.Interactor.OnFinishedLis
 
     override fun onFailure(t: Throwable) {
 
+    }
+    override fun serverCallDone() {
+        callInteractorToFetchDataFromDataBase()
     }
 
     override fun callInteractorToFetchDataFromServer() {

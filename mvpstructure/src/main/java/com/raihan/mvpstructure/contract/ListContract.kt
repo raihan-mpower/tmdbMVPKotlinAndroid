@@ -17,9 +17,11 @@ class ListContract{
         interface OnFinishedListener {
             fun <T> onFinished(list: List<T>)
             fun onFailure(t: Throwable)
+            fun serverCallDone()
         }
         fun requestDataFromServer(onFinishedListener: OnFinishedListener)
         fun requestDataFromDataBase(onFinishedListener: OnFinishedListener)
+        fun unsubscribe()
     }
 
 
