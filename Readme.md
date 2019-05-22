@@ -20,4 +20,4 @@ MVP can get confusing where to subscribe or bind. Presenter? View Controller?
 
   I have separated my Contracts two types for the purpose of application. A list Contract and a detail contract to display list and detail of the movie respectively.
   Below diagram shows what the structure looks like for my list contract. That is responsible for showing the list view in the launch activity.
-  ![N|Solid](https://drive.google.com/file/d/1i2VpvvunDxyDnfu6FLMi7xV2wmVPdTqn/view?usp=sharing)
+  ![N|Solid](https://github.com/raihan-mpower/tmdbMVPKotlinAndroid/blob/master/_mvpkotlin.png?raw=true)
