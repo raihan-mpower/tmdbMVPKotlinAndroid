@@ -30,6 +30,18 @@ class DetailActivityFragment : Fragment(),DetailContract.View {
 
     @BindView(R.id.detailposter)
     lateinit var poster: ImageView
+    @BindView(R.id.movie_title)
+    lateinit var title: TextView
+    @BindView(R.id.movie_release_year)
+    lateinit var release_year: TextView
+    @BindView(R.id.movie_rating)
+    lateinit var movie_rating: TextView
+    @BindView(R.id.movie_votes)
+    lateinit var movie_votes: TextView
+    @BindView(R.id.movie_language)
+    lateinit var movie_language: TextView
+    @BindView(R.id.movie_description)
+    lateinit var movie_description: TextView
 
     lateinit var presenter : MovieDetailPresenter
     lateinit var interactor : MovieDetailInteractor
@@ -58,5 +70,11 @@ class DetailActivityFragment : Fragment(),DetailContract.View {
         Glide.with(context)
             .load(Constants.imageBaseURL+movie.poster_path)
             .into(poster)
+        title.text = movie.title
+        release_year.text = "Release Date: "+movie.release_date;
+        movie_rating.text = "Rating: "+movie.vote_average;
+        movie_votes.text= "Total Votes: "+movie.vote_count
+        movie_description.text = movie.overview
+        movie_language.text = "Language: "+movie.original_language
     }
 }

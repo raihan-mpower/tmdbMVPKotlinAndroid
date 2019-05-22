@@ -122,12 +122,6 @@ public class MovieListInteractorTest {
 
 
         movieList = new MovieList(new ArrayList<Movies>());
-//        Mockito.when(interactor.getApiInterFace()).thenReturn(mockApi);
-
-//        Mockito.when(movieList.getResults()).thenReturn(mockMovies);
-//        Mockito.when(mockApi.getList()).thenReturn(mockMovieListObservable);
-//        Mockito.when(mockMovieListObservable.observeOn(any(Scheduler.class))).thenReturn(mockMovieListObservable);
-//        Mockito.when(mockMovieListObservable.subscribeOn(any(Scheduler.class))).thenReturn(mockMovieListObservable);
 
     }
 
