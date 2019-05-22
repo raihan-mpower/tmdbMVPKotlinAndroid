@@ -5,9 +5,9 @@ import com.raihan.mvpstructure.contract.ListContract
 open class ListPresenter:ListContract.Presenter,ListContract.Interactor.OnFinishedListener{
 
 
-    lateinit var interactor:ListContract.Interactor
+    var interactor:ListContract.Interactor
 
-    lateinit var view:ListContract.View
+    var view:ListContract.View
 
     constructor(interactor: ListContract.Interactor,view: ListContract.View){
         this.interactor = interactor;
@@ -35,6 +35,14 @@ open class ListPresenter:ListContract.Presenter,ListContract.Interactor.OnFinish
 
     override fun callInteractorToFetchDataFromDataBase() {
         interactor.requestDataFromDataBase(this);
+    }
+
+    override fun launchDetailActivity(id: Int) {
+        view.launchDetail(id)
+    }
+
+    override fun unsubscribe() {
+        interactor.unsubscribe()
     }
 
 }

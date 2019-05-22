@@ -7,7 +7,9 @@ import com.raihan.mvpKotlin.db.MovieLocalDb
 import com.raihan.mvpKotlin.db.MoviesDao
 import com.raihan.mvpKotlin.model.MovieList
 import com.raihan.mvpKotlin.model.Movies
+import com.raihan.mvpstructure.contract.DetailContract
 import com.raihan.mvpstructure.contract.ListContract
+import com.raihan.mvpstructure.interactor.DetailInteractor
 import com.raihan.mvpstructure.interactor.ListInteractor
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +21,7 @@ import org.reactivestreams.Subscription
 import java.util.concurrent.Callable
 
 
-class MovieListInteractor(context: Context) : ListInteractor() {
+class MovieDetailInteractor(context: Context) : DetailInteractor() {
 
 //    private val api: ApiServiceInterface = ApiServiceInterface.create()
 
@@ -32,55 +34,13 @@ class MovieListInteractor(context: Context) : ListInteractor() {
     private lateinit var localdb: MovieLocalDb
 
 
-    override fun requestDataFromServer(onFinishedListener: ListContract.Interactor.OnFinishedListener) {
-
-        var results = getApiInterFace().getList()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io());
-        results.subscribe(object: Observer <MovieList>{
-
-            override fun onComplete() {
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                subscriptions.addAll(d);
-            }
-
-            override fun onNext(t: MovieList) {
-                Completable.fromAction {
-                    getLocalDb().movieListDao()
-                        .insertAll(t.results)
-                }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object: CompletableObserver  {
-                    override fun onSubscribe(d: Disposable) {
-                        subscriptions.addAll(d)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        onFinishedListener.onFailure(e)
-                    }
-
-                    override fun onComplete() {
-                        onFinishedListener.serverCallDone()
-                    }
-                })
-
-            }
-
-
-            override fun onError(e: Throwable) {
-                onFinishedListener.onFailure(e);
-            }
-
-        })
-    }
-
-    override fun requestDataFromDataBase(onFinishedListener: ListContract.Interactor.OnFinishedListener) {
-        var results = getUsersFromDb()
+    override fun requestDataFromDataBase(onFinishedListener: DetailContract.Interactor.OnFinishedListener,id: Int) {
+        var results = getUsersFromDb(id)
 //        var results = Observable.just(getLocalDb().movieListDao().all)
 //        var results = Observable.fromCallable<List<Movies>> { getLocalDb().movieListDao().all };
         results.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io());
-        results.subscribe(object: Observer <List<Movies>>{
+        results.subscribe(object: Observer <Movies>{
             override fun onSubscribe(d: Disposable) {
                 subscriptions.addAll(d);
             }
@@ -88,7 +48,7 @@ class MovieListInteractor(context: Context) : ListInteractor() {
             override fun onComplete() {
             }
 
-            override fun onNext(t: List<Movies>) {
+            override fun onNext(t: Movies) {
                 onFinishedListener.onFinished(t)
             }
 
@@ -114,8 +74,8 @@ class MovieListInteractor(context: Context) : ListInteractor() {
         return localdb
     }
 
-    fun getUsersFromDb(): Observable<List<Movies>> {
-        return getLocalDb().movieListDao().getAll().filter { it.isNotEmpty() }
+    fun getUsersFromDb(id:Int): Observable<Movies> {
+        return getLocalDb().movieListDao().findMovieWithId(id.toString())
             .toObservable()
     }
 

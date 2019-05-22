@@ -7,10 +7,13 @@ class ListContract{
         fun attachView(view: View)
         fun callInteractorToFetchDataFromServer();
         fun callInteractorToFetchDataFromDataBase();
+        fun launchDetailActivity(id: Int)
+        fun unsubscribe()
     }
 
     interface View{
         fun <T> setDataToRecyclerView(adapterArrayList: List<T>)
+        fun launchDetail(id: Int)
     }
 
     interface Interactor{

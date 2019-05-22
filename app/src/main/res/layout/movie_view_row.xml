@@ -33,6 +33,7 @@
             android:id="@+id/txt_notice_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="3"
             android:padding="3dp" />
 
         <!-- Text Notice FilePath -->

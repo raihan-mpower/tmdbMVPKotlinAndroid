@@ -14,10 +14,13 @@ import io.reactivex.Single
 @Dao
 interface MoviesDao {
 
-    @get:Query("SELECT * FROM movies")
-    val all: Maybe<List<Movies>>
+    @Query("SELECT * FROM movies")
+    fun getAll() : Maybe<List<Movies>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(items: List<Movies>)
+
+    @Query("SELECT * FROM movies WHERE id = :id")
+    fun findMovieWithId(id: String): Maybe<Movies>
 
 }

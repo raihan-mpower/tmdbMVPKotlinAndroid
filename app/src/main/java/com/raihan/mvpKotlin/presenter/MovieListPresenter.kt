@@ -20,4 +20,5 @@ class MovieListPresenter(interactor: ListContract.Interactor,view: ListContract.
     override fun callInteractorToFetchDataFromDataBase() {
         interactor.requestDataFromDataBase(this);
     }
+
 }
