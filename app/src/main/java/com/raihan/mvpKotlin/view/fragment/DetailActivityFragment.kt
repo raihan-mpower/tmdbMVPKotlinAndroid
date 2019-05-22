@@ -77,4 +77,9 @@ class DetailActivityFragment : Fragment(),DetailContract.View {
         movie_description.text = movie.overview
         movie_language.text = "Language: "+movie.original_language
     }
+
+    override fun onDestroy() {
+        presenter.unsubscribe()
+        super.onDestroy()
+    }
 }

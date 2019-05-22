@@ -69,5 +69,10 @@ class MainActivityFragment : Fragment(),ListContract.View {
         intent.putExtra("movieId", message.toString())
         startActivity(intent)
     }
+
+    override fun onDestroy() {
+        presenter.unsubscribe()
+        super.onDestroy()
+    }
 }
 
